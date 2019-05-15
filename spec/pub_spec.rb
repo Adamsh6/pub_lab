@@ -16,6 +16,7 @@ class PubTest < Minitest::Test
       @drink3 => 1
     }
     @pub = Pub.new("The Black Bull", 100, @drinks)
+    # Above is pub's name, till and drinks
   end
 
   def test_pub_name
@@ -46,6 +47,16 @@ class PubTest < Minitest::Test
     @pub.decrease_drink_stock_level(@drink2)
     @pub.decrease_drink_stock_level(@drink3)
     assert_equal(11, @pub.stock_level)
+  end
+
+  def test_get_stock_value
+    assert_equal(73, @pub.stock_value)
+  end
+
+  def test_has_drink_left
+    @pub.decrease_drink_stock_level(@drink3)
+    assert_equal(false, @pub.has_drink_left?(@drink3))
+    assert_equal(true, @pub.has_drink_left?(@drink1))
   end
 
 

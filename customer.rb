@@ -34,9 +34,13 @@ class Customer
       if @wallet < price || drunk?
         return ("Nut")
       end
+      if !(pub.has_drink_left?(drink))
+        return ("Sorry mate")
+      end
 
     @wallet -= price
     pub.add_to_till(drink)
+    pub.decrease_drink_stock_level(drink)
     increase_alcohol_level(drink)
   end
 

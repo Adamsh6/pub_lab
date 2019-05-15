@@ -8,6 +8,7 @@ class TestDrink < Minitest::Test
   def setup
 
     @drink = Drink.new("Beer", 3, 5)
+# Above is the drink name and the price
   end
 
 

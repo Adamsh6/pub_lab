@@ -49,7 +49,7 @@ class CustomerTest < Minitest::Test
     @customer.buy_drink("Whiskey", @pub)
     assert_equal(36, @customer.wallet)
     assert_equal(104, @pub.till)
-
+    assert_equal(15, @pub.stock_level)
     @almost_drunk_customer.buy_drink("Beer", @pub)
     assert_equal(true, @almost_drunk_customer.drunk?)
   end
@@ -69,6 +69,11 @@ end
 
 def test_buy_drink_drunk
   assert_equal("Nut", @drunk_customer.buy_drink("Beer", @pub))
+end
+
+def test_buy_drink_none_left
+  @pub.decrease_drink_stock_level(@drink3)
+  assert_equal("Sorry mate", @customer.buy_drink("Gin", @pub))
 end
 
 def test_increase_alcohol_level

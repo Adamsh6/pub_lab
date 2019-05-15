@@ -29,4 +29,18 @@ class Pub
     @drinks[drink] -= 1
   end
 
+  def stock_value
+    stock_value_total = 0
+    @drinks.each {|drink, amount| stock_value_total += (drink.cost * amount)}
+    return stock_value_total
+  end
+
+  def has_drink_left?(drink)
+    if @drinks[drink] == 0
+      return false
+    end
+    return true
+  end
+
+
 end
