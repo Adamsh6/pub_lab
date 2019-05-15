@@ -10,7 +10,12 @@ class PubTest < Minitest::Test
     @drink1 = Drink.new("Beer", 5, 3)
     @drink2 = Drink.new("Whiskey", 4, 6)
     @drink3 = Drink.new("Gin", 3, 5)
-    @pub = Pub.new("The Black Bull", 100,[@drink1, @drink2, @drink3])
+    @drinks = {
+      @drink1 => 10,
+      @drink2 => 5,
+      @drink3 => 1
+    }
+    @pub = Pub.new("The Black Bull", 100, @drinks)
   end
 
   def test_pub_name
@@ -18,7 +23,7 @@ class PubTest < Minitest::Test
   end
 
   def test_stock_level
-    assert_equal(3, @pub.stock_level)
+    assert_equal(16, @pub.stock_level)
   end
 
   def test_till_amount
@@ -33,5 +38,15 @@ class PubTest < Minitest::Test
   def test_find_drink_by_name
     assert_equal(@drink3, @pub.find_drink_by_name("Gin"))
   end
+
+  def test_decrease_drink_stock_level
+    @pub.decrease_drink_stock_level(@drink1)
+    @pub.decrease_drink_stock_level(@drink1)
+    @pub.decrease_drink_stock_level(@drink2)
+    @pub.decrease_drink_stock_level(@drink2)
+    @pub.decrease_drink_stock_level(@drink3)
+    assert_equal(11, @pub.stock_level)
+  end
+
 
 end

@@ -3,6 +3,7 @@ require('minitest/rg')
 require_relative('../customer')
 require_relative('../drink')
 require_relative('../pub')
+require_relative('../food')
 
 class CustomerTest < Minitest::Test
 
@@ -10,12 +11,14 @@ class CustomerTest < Minitest::Test
     @drink1 = Drink.new("Beer", 5, 3)
     @drink2 = Drink.new("Whiskey", 4, 6)
     @drink3 = Drink.new("Gin", 3, 5)
-    @pub = Pub.new("The Black Bull", 100,[@drink1, @drink2, @drink3])
+    @drinks = {@drink1 => 10, @drink2 => 5, @drink3 => 1}
+    @pub = Pub.new("The Black Bull", 100, @drinks)
     @customer = Customer.new("Adam", 40, 27)
-    @drunk_customer = Customer.new("Drunky", 0, 67, 11)
+    @drunk_customer = Customer.new("Drunky", 20, 67, 11)
     @underage_customer = Customer.new("Little Timmy", 10, 17)
     @poor_customer = Customer.new("Nae pounds Pete", 1, 19)
     @almost_drunk_customer = Customer.new("Tispy Greg", 20, 22, 9)
+    @food = Food.new("Steak", 10, 8)
   end
 
   def test_get_name
@@ -74,4 +77,10 @@ def test_increase_alcohol_level
 end
 
 
+def test_by_food
+  @drunk_customer.buy_food(@food, @pub)
+  assert_equal(10, @drunk_customer.wallet)
+  assert_equal(110, @pub.till)
+  assert_equal(false, @drunk_customer.drunk?)
+end
 end
